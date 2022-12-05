@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     int tiempoSimulacion = 50;
     int intervaloLlegada = 7;
     int cantidadMaxPacientes = 8;
+    float probabilidad = 1;
 
     // Inicializar
     PacientesAtendidos *pacientesAtendidos = crearPacientesAtendidosVacio();
@@ -22,7 +23,7 @@ int main(int argc, char *argv[])
     vacunatorio = generarFilaVacunatorio(cantidadMaxPacientes, tiempoSimulacion, intervaloLlegada);
 
     // Comenzar Simulacion
-    iniciarSimulacion(vacunatorio, pacientesAtendidos);
+    iniciarSimulacion(vacunatorio, pacientesAtendidos, probabilidad);
 
     // Ver Resultados
     verResultados(vacunatorio, pacientesAtendidos);

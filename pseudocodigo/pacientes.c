@@ -105,13 +105,6 @@ crearPacientesAtendidosVacio(): PacientesAtendidos*
     return pacienteAtendidos
 
 
-..  Complejidad O(1)
-atender(num probabilidad): num
-    aleatorio <- generarNumeroAleatorio
-    IF probabilidad < aleatorio THEN
-        return 1
-    ELSE
-        return 0
 
 .. Complejidad O(n)
 generarFilaVacunatorio(num cantidadMaxPacientes, num tiempoSimulacion, num intervaloLlegada):Vacunatorio*
@@ -196,5 +189,5 @@ generarTiemposAtencionAleatorios(Vacunatorio *vacunatorio): TiempoSimulaciones*
         seAtiende <- atender(probabilidad)
         IF seAtiende <- 1 THEN        
             insertarTiempoSimulacion(tiempoSimulaciones, j) 
-        j <- j + vacunatorio->intervaloLlegada   // AVANZANDO DE 10 EN 10
+        j <- j + vacunatorio->intervaloLlegada  
     return tiempoSimulaciones

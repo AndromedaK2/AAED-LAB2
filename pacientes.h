@@ -49,9 +49,9 @@ void ingresarPaciente(Vacunatorio *vacunatorio, int tiempoLlegada, int ordenLleg
 void atenderPaciente(Vacunatorio *vacunatorio, Paciente *paciente, PacientesAtendidos *pacientesAtendidos);
 int atender(float probabilidad);
 Vacunatorio *generarFilaVacunatorio(int cantidadMaxPacientes, int tiempoSimulacion, int intervaloLlegada);
-void iniciarSimulacion(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos);
+void iniciarSimulacion(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos, float probabilidad);
 void verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos);
-TiempoSimulaciones *generarTiemposAtencionAleatorios(Vacunatorio *vacunatorio);
+TiempoSimulaciones *generarTiemposAtencionAleatorios(Vacunatorio *vacunatorio, float probabilidad);
 
 /// @brief Generar Vacunatorio Vacio
 /// @return Vacunatorio
@@ -158,10 +158,27 @@ PacientesAtendidos *crearPacientesAtendidosVacio()
 /// @return
 int atender(float probabilidad)
 {
-    // printf("probabilidad:  %f \n", probabilidad);
+    int falso = 0;
+    int verdadero = 1;
+    printf("probabilidad:  %f \n", probabilidad);
     float aleatorio = 1.0 * rand() / RAND_MAX;
-    // printf("numero aleatorio:  %f \n", aleatorio);
-    return (probabilidad < aleatorio) ? 1 : 0;
+    printf("numero aleatorio:  %f \n", aleatorio);
+
+
+    // True Izquierda o False Derecha
+
+    // ejemplo 1 probabilidad = 0.7
+    // aleatorio = 0.72
+    // retorna false
+
+    // ejemplo 2 probabilidad = 0.7
+    // aleatorio = 0.3
+    // retorna verdadero
+
+    // ejemplo 3 probabilidad = 1.0
+    // aleatorio = 0.3 
+    // retorna verdadero porque siempre serán numero menores a 1
+    return (probabilidad < aleatorio) ? falso : verdadero;
 }
 
 /// @brief
@@ -191,9 +208,9 @@ Vacunatorio *generarFilaVacunatorio(int cantidadMaxPacientes, int tiempoSimulaci
 /// @brief Comenzar la Simulación de Vacunación
 /// @param vacunatorio
 /// @param pacientesAtendidos
-void iniciarSimulacion(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos)
+void iniciarSimulacion(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos, float probabilidad)
 {
-    TiempoSimulaciones *tiempoSimulaciones = generarTiemposAtencionAleatorios(vacunatorio);
+    TiempoSimulaciones *tiempoSimulaciones = generarTiemposAtencionAleatorios(vacunatorio,probabilidad);
 
     TiempoSimulacion *tiempoSimulacion = tiempoSimulaciones->primero;
     Paciente *paciente = vacunatorio->primerPaciente;
@@ -268,15 +285,13 @@ void verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendi
 /// @brief Generar tiempos de atencion aleatorios
 /// @param vacunatorio
 /// @return Tiempo de Simulaciones
-TiempoSimulaciones *generarTiemposAtencionAleatorios(Vacunatorio *vacunatorio)
+TiempoSimulaciones *generarTiemposAtencionAleatorios(Vacunatorio *vacunatorio, float probabilidad)
 {
     TiempoSimulaciones *tiempoSimulaciones = crearTiempoSimulacionesVacio();
     int j;
     for (j = 0; j < vacunatorio->tiempoSimulacion + vacunatorio->intervaloLlegada;)
     {
-        float rangoMaximo = 1.0;
-        float probabilidad = ((float)rand() / (float)(RAND_MAX)) * rangoMaximo;
-        probabilidad = roundf(10 * probabilidad) / 10;
+
         int seAtiende = atender(probabilidad);
         // printf("j: %d \n", j);
         // printf("probabilidad:  %f \n", probabilidad);
