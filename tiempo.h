@@ -14,7 +14,7 @@ typedef struct TiempoSimulacion
 } TiempoSimulacion;
 
 /// @brief Estructura de Dato TiempoSimulaciones
-/// Representa: Tiempos de Atención
+/// Representa: Tiempos de Atencion
 typedef struct TiempoSimulaciones
 {
     int tamano;

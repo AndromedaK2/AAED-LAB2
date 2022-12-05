@@ -180,8 +180,8 @@ Vacunatorio *generarFilaVacunatorio(int cantidadMaxPacientes, int tiempoSimulaci
 
     for (i = 0; i < vacunatorio->cantidadMaxPacientes; i++)
     {
-        //printf("ingresar paciente %d \n", i);
-        ingresarPaciente(vacunatorio, intervaloLlegadaAux, i+1);
+        // printf("ingresar paciente %d \n", i);
+        ingresarPaciente(vacunatorio, intervaloLlegadaAux, i + 1);
         intervaloLlegadaAux = intervaloLlegadaAux + vacunatorio->intervaloLlegada;
     }
 
