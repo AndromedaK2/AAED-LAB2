@@ -19,14 +19,16 @@ typedef struct Paciente
     struct Paciente *siguiente;
 } Paciente;
 
-/// @brief
+/// @brief Estructura de Datos TiempoSimulacion
+/// Representa: Tiempo de Atención
 typedef struct TiempoSimulacion
 {
     int tiempo;
     struct TiempoSimulacion *siguiente;
 } TiempoSimulacion;
 
-/// @brief
+/// @brief Estructura de Dato TiempoSimulaciones
+/// Representa: Tiempos de Atención
 typedef struct TiempoSimulaciones
 {
     int tamano;
@@ -47,7 +49,7 @@ typedef struct Vacunatorio
 } Vacunatorio;
 
 /// @brief  Estructura de Datos Pacientes:
-/// Representa:
+/// Representa: Pacientes Atendidos y Vacunados
 typedef struct Pacientes
 {
     Paciente *inicio;
@@ -214,7 +216,7 @@ Vacunatorio *generarFilaVacunatorio(int cantidadMaxPacientes, int tiempoSimulaci
 
     for (i = 0; i < vacunatorio->cantidadMaxPacientes; i++)
     {
-        printf("ingresar paciente %d \n",i);
+        printf("ingresar paciente %d \n", i);
         ingresarPaciente(vacunatorio, intervaloLlegadaAux, i);
         intervaloLlegadaAux = intervaloLlegadaAux + vacunatorio->intervaloLlegada;
     }
@@ -265,13 +267,13 @@ void iniciarSimulacion(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAt
     for (i = 0; i < tiempoSimulaciones->tamano; i++)
     {
 
-        //printf("Tiempo Simulacion auxiliar:%d \n", tiempoSimulacion->tiempo);
+        // printf("Tiempo Simulacion auxiliar:%d \n", tiempoSimulacion->tiempo);
         Paciente *paciente = vacunatorio->primerPaciente;
 
         tiempoSimulacionAux = tiempoSimulacion->tiempo;
         for (j = 0; j < vacunatorio->cantidadActualPacientes; j++)
         {
-          //  printf("Tiempo llegada paciente %d \n", paciente->tiempoLlegada);
+            //  printf("Tiempo llegada paciente %d \n", paciente->tiempoLlegada);
 
             if (paciente->tiempoLlegada <= tiempoSimulacion->tiempo)
             {
@@ -281,7 +283,7 @@ void iniciarSimulacion(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAt
             }
             paciente = paciente->siguiente;
         }
-        //printf("Fin recorrido: %d \n", i);
+        // printf("Fin recorrido: %d \n", i);
         tiempoSimulacion = tiempoSimulacion->siguiente;
     }
 }
@@ -308,7 +310,7 @@ void verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendi
     }
 
     tiempoPromedioEsperaVacunacion = totalTiempoEsperaVacunacion / pacientesAtendidos->cantidad;
-    printf("\n Total Pacientes No Atendidos: %d \n",vacunatorio->cantidadActualPacientes);
+    printf("\n Total Pacientes No Atendidos: %d \n", vacunatorio->cantidadActualPacientes);
     Paciente *pacienteNoAtendido = vacunatorio->primerPaciente;
     for (i = 0; i < vacunatorio->cantidadActualPacientes; i++)
     {
