@@ -29,7 +29,6 @@ Fin Registro
 .. Definción de Operaciones
 
 .. Complejidad O(1)
-
 generarVacunatorioVacio(): Vacunatorio*
     vacunatorio <- asignarMemoria
     vacunatorio->tiempoSimulacion <- 0
@@ -40,7 +39,6 @@ generarVacunatorioVacio(): Vacunatorio*
     return vacunatorio
 
 .. Complejidad O(1)
-
 crearPaciente(): Paciente*
     paciente <- asignarMemoria
     paciente->tiempoLlegada <- -1
@@ -53,7 +51,6 @@ crearPaciente(): Paciente*
 
 
 .. Complejidad O(1)
-
 insertarPacienteAtendido(PacientesAtendidos *pacientesAtendidos, Paciente *paciente): void
     pacienteAtendido <- asignarMemoria
     pacienteAtendido->tiempoEspera <- paciente->tiempoAtencion - paciente->tiempoLlegada
@@ -67,7 +64,6 @@ insertarPacienteAtendido(PacientesAtendidos *pacientesAtendidos, Paciente *pacie
 
 
 .. Complejidad O(1)
-
 ingresarPaciente(Vacunatorio *vacunatorio, num tiempoLlegada, num ordenLlegada): void
     IF vacunatorio->cantidadMaxPacientes = vacunatorio->cantidadActualPacientes THEN
         return        
@@ -86,7 +82,6 @@ ingresarPaciente(Vacunatorio *vacunatorio, num tiempoLlegada, num ordenLlegada):
 
 
 .. Complejidad O(1)
-
 atenderPaciente(Vacunatorio *vacunatorio, Paciente *paciente, PacientesAtendidos *pacientesAtendidos): void
     IF (vacunatorio->cantidadActualPacientes = 1) THEN
         insertarPacienteAtendido(pacientesAtendidos, paciente)
@@ -103,7 +98,6 @@ atenderPaciente(Vacunatorio *vacunatorio, Paciente *paciente, PacientesAtendidos
     
 
 .. Complejidad O(1)
-
 crearPacientesAtendidosVacio(): PacientesAtendidos*
     PacientesAtendidos *pacienteAtendidos <- asignarMemoria
     pacienteAtendidos->inicio <- NULL
@@ -112,7 +106,6 @@ crearPacientesAtendidosVacio(): PacientesAtendidos*
 
 
 ..  Complejidad O(1)
-
 atender(num probabilidad): num
     aleatorio <- generarNumeroAleatorio
     IF probabilidad < aleatorio THEN
@@ -121,7 +114,6 @@ atender(num probabilidad): num
         return 0
 
 .. Complejidad O(n)
-
 generarFilaVacunatorio(num cantidadMaxPacientes, num tiempoSimulacion, num intervaloLlegada):Vacunatorio*
     Vacunatorio *vacunatorio <- generarVacunatorioVacio()
     vacunatorio->cantidadMaxPacientes <- cantidadMaxPacientes
@@ -135,7 +127,6 @@ generarFilaVacunatorio(num cantidadMaxPacientes, num tiempoSimulacion, num inter
 
 
 ..Complejidad O()
-
 iniciarSimulacion(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos): void
     tiempoSimulaciones <- generarTiemposAtencionAleatorios(vacunatorio)
     tiempoSimulacion <- tiempoSimulaciones->primero
@@ -158,7 +149,6 @@ iniciarSimulacion(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendid
 
 
 ..Complejidad O(n)
-
 verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos): void
 
     tiempoPromedioEsperaVacunacion <- 0
@@ -198,7 +188,6 @@ verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos):
 
 
 .. Complejidad O(N)
-
 generarTiemposAtencionAleatorios(Vacunatorio *vacunatorio): TiempoSimulaciones*
     tiempoSimulaciones <- crearTiempoSimulacionesVacio()
     j = 0

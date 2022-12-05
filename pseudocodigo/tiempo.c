@@ -1,5 +1,6 @@
 
-// Definición de TDAS
+.. Definición de TDAS
+
 TiempoSimulacion: Registro
     tiempo
     *siguiente
@@ -11,9 +12,9 @@ TiempoSimulaciones: Registro
     *ultimo
 Fin Registro
 
-// Definción de Operaciones
+.. Definción de Operaciones
 
-// Complejidad: O(1)
+.. Complejidad: O(1)
 crearTiempoSimulacionesVacio(): TiempoSimulaciones*
     tiempoSimulaciones <- asignarMemoria
     tiempoSimulaciones->primero <- NULL
@@ -21,7 +22,7 @@ crearTiempoSimulacionesVacio(): TiempoSimulaciones*
     tiempoSimulaciones->tamano <- 0
     return tiempoSimulaciones
 
-// Complejidad O(1)
+.. Complejidad O(1)
 insertarTiempoSimulacion(TiempoSimulaciones *tiempoSimulaciones, num tiempo): void
     tiempoSimulacion <- asignarMemoria
     IF  tiempoSimulaciones->tamano = 0 THEN
