@@ -119,7 +119,7 @@ generarFilaVacunatorio(num cantidadMaxPacientes, num tiempoSimulacion, num inter
     return vacunatorio
 
 
-..Complejidad O()
+..Complejidad O(n^2)
 iniciarSimulacion(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos): void
     tiempoSimulaciones <- generarTiemposAtencionAleatorios(vacunatorio)
     tiempoSimulacion <- tiempoSimulaciones->primero
@@ -164,7 +164,7 @@ verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos):
     ESCRIBIR("Total Pacientes No Atendidos: %d ", vacunatorio->cantidadActualPacientes)
     pacienteNoAtendido <- vacunatorio->primerPaciente
 
-    FOR (i <- 0 i < vacunatorio->cantidadActualPacientes i++)
+    FOR i <- 0 i TO vacunatorio->cantidadActualPacientes STEP 1
         ESCRIBIR("Paciente %d", pacienteNoAtendido->ordenLlegada)
         ESCRIBIR("Tiempo Espera %d", pacienteNoAtendido->tiempoEspera)
         ESCRIBIR("Tiempo llegada %d", pacienteNoAtendido->tiempoLlegada)
