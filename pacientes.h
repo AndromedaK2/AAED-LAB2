@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include "tiempo.h"
 
 /// @brief Estructura de Dato Paciente
 /// Representación: Un Paciente con sus hora de llegada
@@ -18,23 +19,6 @@ typedef struct Paciente
     int vacunado; // 0 o 1
     struct Paciente *siguiente;
 } Paciente;
-
-/// @brief Estructura de Datos TiempoSimulacion
-/// Representa: Tiempo de Atención
-typedef struct TiempoSimulacion
-{
-    int tiempo;
-    struct TiempoSimulacion *siguiente;
-} TiempoSimulacion;
-
-/// @brief Estructura de Dato TiempoSimulaciones
-/// Representa: Tiempos de Atención
-typedef struct TiempoSimulaciones
-{
-    int tamano;
-    TiempoSimulacion *primero;
-    TiempoSimulacion *ultimo;
-} TiempoSimulaciones;
 
 /// @brief Estructura de Dato Vacunatorio:
 /// Representa: Cola o Fila del Vacunatorio
@@ -56,16 +40,18 @@ typedef struct Pacientes
     int cantidad;
 } PacientesAtendidos;
 
-/// @brief Crear Tiempo de simulaciones vacio
-/// @return Tiempo de Simulaciones
-TiempoSimulaciones *crearTiempoSimulacionesVacio()
-{
-    TiempoSimulaciones *tiempoSimulaciones = (TiempoSimulaciones *)malloc(sizeof(TiempoSimulaciones));
-    tiempoSimulaciones->primero = NULL;
-    tiempoSimulaciones->ultimo = NULL;
-    tiempoSimulaciones->tamano = 0;
-    return tiempoSimulaciones;
-}
+// Operaciones
+Vacunatorio *generarVacunatorioVacio();
+Paciente *crearPaciente();
+PacientesAtendidos *crearPacientesAtendidosVacio();
+void insertarPacienteAtendido(PacientesAtendidos *pacientesAtendidos, Paciente *paciente);
+void ingresarPaciente(Vacunatorio *vacunatorio, int tiempoLlegada, int ordenLlegada);
+void atenderPaciente(Vacunatorio *vacunatorio, Paciente *paciente, PacientesAtendidos *pacientesAtendidos);
+int atender(float probabilidad);
+Vacunatorio *generarFilaVacunatorio(int cantidadMaxPacientes, int tiempoSimulacion, int intervaloLlegada);
+void iniciarSimulacion(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos);
+void verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos);
+TiempoSimulaciones *generarTiemposAtencionAleatorios(Vacunatorio *vacunatorio);
 
 /// @brief Generar Vacunatorio Vacio
 /// @return Vacunatorio
@@ -168,28 +154,6 @@ PacientesAtendidos *crearPacientesAtendidosVacio()
 }
 
 /// @brief
-/// @param tiempoSimulaciones
-/// @param valor
-void insertarTiempoSimulacion(TiempoSimulaciones *tiempoSimulaciones, int tiempo)
-{
-    TiempoSimulacion *tiempoSimulacion = (TiempoSimulacion *)malloc(sizeof(TiempoSimulacion));
-    if (tiempoSimulaciones->tamano == 0)
-    {
-        tiempoSimulacion->tiempo = tiempo;
-        tiempoSimulaciones->primero = tiempoSimulacion;
-        tiempoSimulaciones->ultimo = tiempoSimulacion;
-        tiempoSimulaciones->tamano = 1;
-    }
-    else
-    {
-        tiempoSimulacion->tiempo = tiempo;
-        tiempoSimulaciones->ultimo->siguiente = tiempoSimulacion;
-        tiempoSimulaciones->ultimo = tiempoSimulacion;
-        tiempoSimulaciones->tamano++;
-    }
-}
-
-/// @brief
 /// @param probabilidad
 /// @return
 int atender(float probabilidad)
@@ -222,33 +186,6 @@ Vacunatorio *generarFilaVacunatorio(int cantidadMaxPacientes, int tiempoSimulaci
     }
 
     return vacunatorio;
-}
-
-/// @brief Generar tiempos de atencion aleatorios
-/// @param vacunatorio
-/// @return Tiempo de Simulaciones
-TiempoSimulaciones *generarTiemposAtencionAleatorios(Vacunatorio *vacunatorio)
-{
-    TiempoSimulaciones *tiempoSimulaciones = crearTiempoSimulacionesVacio();
-    int j;
-    for (j = 0; j < vacunatorio->tiempoSimulacion + vacunatorio->intervaloLlegada;)
-    {
-        float rangoMaximo = 1.0;
-        float probabilidad = ((float)rand() / (float)(RAND_MAX)) * rangoMaximo;
-        probabilidad = roundf(10 * probabilidad) / 10;
-        int seAtiende = atender(probabilidad);
-        // printf("j: %d \n", j);
-        // printf("probabilidad:  %f \n", probabilidad);
-        // printf("se atiende?:  %d \n", seAtiende);
-
-        if (seAtiende == 1)
-        {
-            insertarTiempoSimulacion(tiempoSimulaciones, j);
-        }
-
-        j = j + vacunatorio->intervaloLlegada;
-    }
-    return tiempoSimulaciones;
 }
 
 /// @brief Comenzar la Simulación de Vacunación
@@ -326,4 +263,31 @@ void verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendi
     printf("Cantidad de Pacientes Vacunados %d \n", pacientesAtendidos->cantidad);
     printf("Cantidad de Pacientes No Vacunados %d \n", vacunatorio->cantidadActualPacientes);
     printf("Tiempo Promedio de Espera de Vacunacion %d \n", tiempoPromedioEsperaVacunacion);
+}
+
+/// @brief Generar tiempos de atencion aleatorios
+/// @param vacunatorio
+/// @return Tiempo de Simulaciones
+TiempoSimulaciones *generarTiemposAtencionAleatorios(Vacunatorio *vacunatorio)
+{
+    TiempoSimulaciones *tiempoSimulaciones = crearTiempoSimulacionesVacio();
+    int j;
+    for (j = 0; j < vacunatorio->tiempoSimulacion + vacunatorio->intervaloLlegada;)
+    {
+        float rangoMaximo = 1.0;
+        float probabilidad = ((float)rand() / (float)(RAND_MAX)) * rangoMaximo;
+        probabilidad = roundf(10 * probabilidad) / 10;
+        int seAtiende = atender(probabilidad);
+        // printf("j: %d \n", j);
+        // printf("probabilidad:  %f \n", probabilidad);
+        // printf("se atiende?:  %d \n", seAtiende);
+
+        if (seAtiende == 1)
+        {
+            insertarTiempoSimulacion(tiempoSimulaciones, j);
+        }
+
+        j = j + vacunatorio->intervaloLlegada;
+    }
+    return tiempoSimulaciones;
 }
