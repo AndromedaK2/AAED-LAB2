@@ -180,8 +180,8 @@ Vacunatorio *generarFilaVacunatorio(int cantidadMaxPacientes, int tiempoSimulaci
 
     for (i = 0; i < vacunatorio->cantidadMaxPacientes; i++)
     {
-        printf("ingresar paciente %d \n", i);
-        ingresarPaciente(vacunatorio, intervaloLlegadaAux, i);
+        //printf("ingresar paciente %d \n", i);
+        ingresarPaciente(vacunatorio, intervaloLlegadaAux, i+1);
         intervaloLlegadaAux = intervaloLlegadaAux + vacunatorio->intervaloLlegada;
     }
 
@@ -233,7 +233,7 @@ void verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendi
     int i = 0, tiempoPromedioEsperaVacunacion = 0, totalTiempoEsperaVacunacion = 0;
 
     Paciente *pacienteAtendido = pacientesAtendidos->inicio;
-    printf("\n Total Pacientes Atendidos \n");
+    printf("\nTotal Pacientes Atendidos \n");
     for (i = 0; i < pacientesAtendidos->cantidad; i++)
     {
 
@@ -247,7 +247,7 @@ void verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendi
     }
 
     tiempoPromedioEsperaVacunacion = totalTiempoEsperaVacunacion / pacientesAtendidos->cantidad;
-    printf("\n Total Pacientes No Atendidos: %d \n", vacunatorio->cantidadActualPacientes);
+    printf("\nTotal Pacientes No Atendidos: %d \n", vacunatorio->cantidadActualPacientes);
     Paciente *pacienteNoAtendido = vacunatorio->primerPaciente;
     for (i = 0; i < vacunatorio->cantidadActualPacientes; i++)
     {
@@ -259,7 +259,7 @@ void verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendi
         printf("----------------------------------\n");
     }
 
-    printf("\n Resumen \n");
+    printf("\nResumen\n");
     printf("Cantidad de Pacientes Vacunados %d \n", pacientesAtendidos->cantidad);
     printf("Cantidad de Pacientes No Vacunados %d \n", vacunatorio->cantidadActualPacientes);
     printf("Tiempo Promedio de Espera de Vacunacion %d \n", tiempoPromedioEsperaVacunacion);
