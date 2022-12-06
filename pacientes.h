@@ -160,10 +160,9 @@ int atender(float probabilidad)
 {
     int falso = 0;
     int verdadero = 1;
-    printf("probabilidad:  %f \n", probabilidad);
+    // printf("probabilidad:  %f \n", probabilidad);
     float aleatorio = 1.0 * rand() / RAND_MAX;
-    printf("numero aleatorio:  %f \n", aleatorio);
-
+    // printf("numero aleatorio:  %f \n", aleatorio);
 
     // True Izquierda o False Derecha
 
@@ -176,7 +175,7 @@ int atender(float probabilidad)
     // retorna verdadero
 
     // ejemplo 3 probabilidad = 1.0
-    // aleatorio = 0.3 
+    // aleatorio = 0.3
     // retorna verdadero porque siempre serán numero menores a 1
     return (probabilidad < aleatorio) ? falso : verdadero;
 }
@@ -210,7 +209,7 @@ Vacunatorio *generarFilaVacunatorio(int cantidadMaxPacientes, int tiempoSimulaci
 /// @param pacientesAtendidos
 void iniciarSimulacion(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos, float probabilidad)
 {
-    TiempoSimulaciones *tiempoSimulaciones = generarTiemposAtencionAleatorios(vacunatorio,probabilidad);
+    TiempoSimulaciones *tiempoSimulaciones = generarTiemposAtencionAleatorios(vacunatorio, probabilidad);
 
     TiempoSimulacion *tiempoSimulacion = tiempoSimulaciones->primero;
     Paciente *paciente = vacunatorio->primerPaciente;
@@ -218,27 +217,30 @@ void iniciarSimulacion(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAt
 
     printf("Inicio Tiempo simulacion \n");
     printf("Cantidad de pacientes %d \n", vacunatorio->cantidadActualPacientes);
-    for (i = 0; i < tiempoSimulaciones->tamano; i++)
+    if (tiempoSimulaciones->tamano > 0)
     {
-
-        // printf("Tiempo Simulacion auxiliar:%d \n", tiempoSimulacion->tiempo);
-        Paciente *paciente = vacunatorio->primerPaciente;
-
-        tiempoSimulacionAux = tiempoSimulacion->tiempo;
-        for (j = 0; j < vacunatorio->cantidadActualPacientes; j++)
+        for (i = 0; i < tiempoSimulaciones->tamano; i++)
         {
-            //  printf("Tiempo llegada paciente %d \n", paciente->tiempoLlegada);
 
-            if (paciente->tiempoLlegada <= tiempoSimulacion->tiempo)
+            // printf("Tiempo Simulacion auxiliar:%d \n", tiempoSimulacion->tiempo);
+            Paciente *paciente = vacunatorio->primerPaciente;
+
+            tiempoSimulacionAux = tiempoSimulacion->tiempo;
+            for (j = 0; j < vacunatorio->cantidadActualPacientes; j++)
             {
-                paciente->tiempoAtencion = tiempoSimulacionAux;
-                atenderPaciente(vacunatorio, paciente, pacientesAtendidos);
-                tiempoSimulacionAux++;
+                // printf("Tiempo llegada paciente %d \n", paciente->tiempoLlegada);
+
+                if (paciente->tiempoLlegada <= tiempoSimulacion->tiempo)
+                {
+                    paciente->tiempoAtencion = tiempoSimulacionAux;
+                    atenderPaciente(vacunatorio, paciente, pacientesAtendidos);
+                    tiempoSimulacionAux++;
+                }
+                paciente = paciente->siguiente;
             }
-            paciente = paciente->siguiente;
+            // printf("Fin recorrido: %d \n", i);
+            tiempoSimulacion = tiempoSimulacion->siguiente;
         }
-        // printf("Fin recorrido: %d \n", i);
-        tiempoSimulacion = tiempoSimulacion->siguiente;
     }
 }
 
@@ -250,7 +252,12 @@ void verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendi
     int i = 0, tiempoPromedioEsperaVacunacion = 0, totalTiempoEsperaVacunacion = 0;
 
     Paciente *pacienteAtendido = pacientesAtendidos->inicio;
-    printf("\nTotal Pacientes Atendidos \n");
+
+    if (pacientesAtendidos->cantidad > 0)
+    {
+        tiempoPromedioEsperaVacunacion = totalTiempoEsperaVacunacion / pacientesAtendidos->cantidad;
+    }
+    printf("\nTotal Pacientes Atendidos: %d\n", pacientesAtendidos->cantidad);
     for (i = 0; i < pacientesAtendidos->cantidad; i++)
     {
 
@@ -263,7 +270,6 @@ void verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendi
         printf("----------------------------------\n");
     }
 
-    tiempoPromedioEsperaVacunacion = totalTiempoEsperaVacunacion / pacientesAtendidos->cantidad;
     printf("\nTotal Pacientes No Atendidos: %d \n", vacunatorio->cantidadActualPacientes);
     Paciente *pacienteNoAtendido = vacunatorio->primerPaciente;
     for (i = 0; i < vacunatorio->cantidadActualPacientes; i++)
@@ -276,10 +282,10 @@ void verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendi
         printf("----------------------------------\n");
     }
 
-    printf("\nResumen\n");
-    printf("Cantidad de Pacientes Vacunados %d \n", pacientesAtendidos->cantidad);
-    printf("Cantidad de Pacientes No Vacunados %d \n", vacunatorio->cantidadActualPacientes);
-    printf("Tiempo Promedio de Espera de Vacunacion %d \n", tiempoPromedioEsperaVacunacion);
+    printf("\nResumen:\n");
+    printf("1. Cantidad de Pacientes Vacunados %d \n", pacientesAtendidos->cantidad);
+    printf("2. Cantidad de Pacientes No Vacunados %d \n", vacunatorio->cantidadActualPacientes);
+    printf("3. Tiempo Promedio de Espera de Vacunacion %d \n", tiempoPromedioEsperaVacunacion);
 }
 
 /// @brief Generar tiempos de atencion aleatorios

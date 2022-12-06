@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     int tiempoSimulacion = 50;
     int intervaloLlegada = 7;
     int cantidadMaxPacientes = 8;
-    float probabilidad = 0.0;
+    float probabilidad = 0;
 
     // Inicializar
     PacientesAtendidos *pacientesAtendidos = crearPacientesAtendidosVacio();
