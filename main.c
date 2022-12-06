@@ -10,10 +10,10 @@ int main(int argc, char *argv[])
 {
 
     srand(time(NULL));
-    int tiempoSimulacion = argv[0];
-    int intervaloLlegada = argv[1];
-    int probabilidad   = argv[2];   
-    int cantidadMaxPacientes = argv[3];
+    int tiempoSimulacion = atoi(argv[1]);
+    int intervaloLlegada = atoi(argv[2]);
+    float probabilidad   = atof(argv[3]);   
+    int cantidadMaxPacientes = atoi(argv[4]);
    
     // Inicializar
     PacientesAtendidos *pacientesAtendidos = crearPacientesAtendidosVacio();
