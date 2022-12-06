@@ -142,7 +142,7 @@ iniciarSimulacion(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendid
 
 
 ..Complejidad O(n)
-verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos): void
+verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos, num probabilidad): void
 
     tiempoPromedioEsperaVacunacion <- 0
     totalTiempoEsperaVacunacion <- 0
@@ -176,6 +176,7 @@ verResultados(Vacunatorio *vacunatorio, PacientesAtendidos *pacientesAtendidos):
     ESCRIBIR("Cantidad de Pacientes Vacunados %d ", pacientesAtendidos->cantidad)
     ESCRIBIR("Cantidad de Pacientes No Vacunados %d ", vacunatorio->cantidadActualPacientes)
     ESCRIBIR("Tiempo Promedio de Espera de Vacunacion %d ", tiempoPromedioEsperaVacunacion)
+    ESCRIBIR("Probabilidad %d ", probabilidad)
 
 
 
