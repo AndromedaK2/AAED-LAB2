@@ -1,5 +1,5 @@
 // Autor: Creado Por Cristopher Angulo
-// Archivo: Main Cliente para la ejecucion principal de la simulaci�n de vacunacion
+// Archivo: Main Cliente para la ejecucion principal de la simulacion de vacunacion
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     int tiempoSimulacion = 50;
     int intervaloLlegada = 7;
     int cantidadMaxPacientes = 8;
-    float probabilidad = 1;
+    float probabilidad = 0.0;
 
     // Inicializar
     PacientesAtendidos *pacientesAtendidos = crearPacientesAtendidosVacio();

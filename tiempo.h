@@ -22,6 +22,10 @@ typedef struct TiempoSimulaciones
     TiempoSimulacion *ultimo;
 } TiempoSimulaciones;
 
+
+TiempoSimulaciones *crearTiempoSimulacionesVacio();
+void insertarTiempoSimulacion(TiempoSimulaciones *tiempoSimulaciones, int tiempo);
+
 /// @brief Crear Tiempo de simulaciones vacio
 /// @return Tiempo de Simulaciones
 TiempoSimulaciones *crearTiempoSimulacionesVacio()
